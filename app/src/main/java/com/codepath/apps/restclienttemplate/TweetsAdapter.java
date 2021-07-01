@@ -19,7 +19,7 @@ import java.util.List;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
-    Context context;
+    final Context context;
     List<Tweet> tweets;
 
     // Pass in the context and list of tweets
@@ -55,10 +55,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     // Define a viewholder
     public class  ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivProfileImage;
-        TextView tvBody;
-        TextView tvScreenName;
-        TextView tvTime;
+        final ImageView ivProfileImage;
+        final TextView tvBody;
+        final TextView tvScreenName;
+        final TextView tvTime;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
