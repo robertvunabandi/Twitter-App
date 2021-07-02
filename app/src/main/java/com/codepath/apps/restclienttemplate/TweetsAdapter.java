@@ -17,9 +17,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
-    Context context;
+    final Context context;
     List<Tweet> tweets;
 
     // Pass in the context and list of tweets
@@ -52,17 +54,29 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         return tweets.size();
     }
 
+    public void clear(){
+        tweets.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Tweet> list){
+        tweets.addAll(list);
+        notifyDataSetChanged();
+    }
+
     // Define a viewholder
     public class  ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivProfileImage;
-        TextView tvBody;
-        TextView tvScreenName;
-        TextView tvTime;
+        final ImageView ivProfileImage;
+        final ImageView ivContent;
+        final TextView tvBody;
+        final TextView tvScreenName;
+        final TextView tvTime;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
+            ivContent = itemView.findViewById(R.id.ivContent);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             tvTime = itemView.findViewById(R.id.tvTime);
@@ -72,7 +86,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
             tvTime.setText(tweet.createdAt);
-            Glide.with(context).load(tweet.user.profileImageUrl).into(ivProfileImage);
+            Glide.with(context).load(tweet.user.profileImageUrl).centerCrop().transform(new RoundedCornersTransformation(28, 8)).into(ivProfileImage);
+            if(tweet.content != ""){
+                ivContent.setVisibility(View.VISIBLE);
+                Glide.with(context).load(tweet.content).centerCrop().transform(new RoundedCornersTransformation(28, 8)).into(ivContent);
+            }
+            else{
+                ivContent.setVisibility(View.GONE);
+            }
         }
     }
 }
