@@ -85,7 +85,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         public void bind(Tweet tweet) {
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.screenName);
-            tvTime.setText(tweet.createdAt);
+            tvTime.setText(TextFormatter.getRelativeTimeAgo(tweet.createdAt));
             Glide.with(context).load(tweet.user.profileImageUrl).centerCrop().transform(new RoundedCornersTransformation(28, 8)).into(ivProfileImage);
             if(tweet.content != ""){
                 ivContent.setVisibility(View.VISIBLE);
